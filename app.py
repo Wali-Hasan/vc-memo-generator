@@ -166,19 +166,58 @@ st.markdown("""
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         margin-top: 2em;
         border: 2px solid #2563eb;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
     
     .memo-section h1, .memo-section h2, .memo-section h3 {
         color: #1a1a1a !important;
         margin-bottom: 1em;
         font-weight: 600;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        letter-spacing: normal !important;
     }
     
-    .memo-section p {
+    /* Style all text elements in the memo */
+    .memo-section p,
+    .memo-section span,
+    .memo-section div {
         color: #1a1a1a !important;
-        font-size: 1.1em;
-        line-height: 1.6;
-        margin-bottom: 1em;
+        font-size: 1.1em !important;
+        line-height: 1.8 !important;
+        margin-bottom: 1em !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+        font-weight: 400 !important;
+        letter-spacing: 0.01em !important;
+        word-spacing: 0.05em !important;
+        font-style: normal !important;
+        text-align: left !important;
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+    }
+
+    /* Ensure proper text rendering */
+    .memo-section * {
+        text-rendering: optimizeLegibility !important;
+        -webkit-text-size-adjust: 100% !important;
+    }
+
+    /* Add proper spacing between sections */
+    .memo-section > div {
+        margin-bottom: 2em !important;
+    }
+
+    /* Ensure links are properly styled */
+    .memo-section a {
+        color: #2563eb !important;
+        text-decoration: none !important;
+        font-weight: 500 !important;
+    }
+
+    .memo-section a:hover {
+        text-decoration: underline !important;
     }
     
     /* Dividers */
@@ -322,7 +361,17 @@ def main():
                 try:
                     with st.spinner("Crafting your investment memo..."):
                         memo = generate_memo(input_data)
-                        st.session_state.memo = memo
+                        # Process the memo text to ensure proper spacing and formatting
+                        processed_memo = memo.replace(". ", ".\n\n")  # Add line breaks after sentences
+                        processed_memo = processed_memo.replace("Market Opportunity", "\n## Market Opportunity\n")
+                        processed_memo = processed_memo.replace("Company Overview", "\n## Company Overview\n")
+                        processed_memo = processed_memo.replace("Problem and Solution", "\n## Problem and Solution\n")
+                        processed_memo = processed_memo.replace("Traction", "\n## Traction\n")
+                        processed_memo = processed_memo.replace("Team Evaluation", "\n## Team Evaluation\n")
+                        processed_memo = processed_memo.replace("Competitive Landscape", "\n## Competitive Landscape\n")
+                        processed_memo = processed_memo.replace("Risks and Challenges", "\n## Risks and Challenges\n")
+                        processed_memo = processed_memo.replace("Follow-Up Questions", "\n## Follow-Up Questions\n")
+                        st.session_state.memo = processed_memo
                 except Exception as e:
                     st.error(f"Error generating memo: {str(e)}")
             else:
@@ -333,7 +382,8 @@ def main():
     if st.session_state.memo:
         st.markdown("<hr>", unsafe_allow_html=True)
         st.markdown('<div class="memo-section">', unsafe_allow_html=True)
-        st.markdown('<h2 style="color: #1a1a1a;">INVESTMENT MEMO</h2>', unsafe_allow_html=True)
+        st.markdown("# INVESTMENT MEMO", unsafe_allow_html=True)
+        # Render the processed memo as markdown
         st.markdown(st.session_state.memo)
         st.markdown('</div>', unsafe_allow_html=True)
         
