@@ -1,24 +1,19 @@
 # VC Memo Generator
 
-A Streamlit web application that generates venture capital investment memos using OpenAI's GPT-4 API. This project is under active development
+A modern Streamlit web application that generates venture capital investment memos using OpenAI's GPT-4 API.
 
 ## Features
 
 - Generate structured VC memos from either free-form text or a structured form
 - Powered by OpenAI's GPT-4 for high-quality analysis
-- Export memos to PDF format
-- Clean, modern web interface
+- Export memos to PDF format using reportlab (no external dependencies required)
+- Clean, modern web interface with professional styling
+- Real-time memo generation with proper markdown formatting
 
 ## Prerequisites
 
 - Python 3.8+
-- wkhtmltopdf (required for PDF generation)
-
-### Installing wkhtmltopdf
-
-- **Windows**: Download and install from [wkhtmltopdf downloads](https://wkhtmltopdf.org/downloads.html)
-- **macOS**: `brew install wkhtmltopdf`
-- **Linux**: `sudo apt-get install wkhtmltopdf`
+- OpenAI API key
 
 ## Setup
 
@@ -41,8 +36,10 @@ pip install -r requirements.txt
 
 4. Create a `.env` file in the project root and add your OpenAI API key:
 ```
-OPENAI_API_KEY=your_api_key_here
+OPENAI_API_KEY=your_actual_api_key_here
 ```
+
+You can get an API key from: https://platform.openai.com/api-keys
 
 ## Usage
 
@@ -54,35 +51,44 @@ streamlit run app.py
 2. Open your browser and navigate to `http://localhost:8501`
 
 3. Choose your input method:
-   - Free-form text: Enter a detailed description of your startup
-   - Structured form: Fill in specific details about your startup
+   - **FREE-FORM TEXT**: Enter a detailed description of your startup
+   - **STRUCTURED FORM**: Fill in specific details about your startup using the form fields
 
-4. Click "Generate Memo" to create the investment memo
+4. Click "GENERATE MEMO" to create the investment memo
 
-5. Use the "Export as PDF" button to download the memo as a PDF file
+5. Use the "EXPORT PDF" button to download the memo as a PDF file
 
 ## Project Structure
 
-- `app.py` - Main Streamlit application
+- `app.py` - Main Streamlit application with modern UI
 - `memo_generator.py` - Handles GPT-4 API calls and memo generation
-- `pdf_exporter.py` - PDF export functionality
+- `pdf_exporter.py` - PDF export functionality using reportlab
 - `requirements.txt` - Project dependencies
+- `clear_cache.py` - Utility script to clear Python cache
 
-## License
+## Dependencies
 
-MIT 
+- **streamlit** - Web application framework
+- **openai** - OpenAI API integration
+- **python-dotenv** - Environment variable management
+- **reportlab** - PDF generation (no external dependencies required)
+- **python-slugify** - String processing
+- **markdown2** - Markdown processing for better text formatting
 
-TechHealth AI is a healthcare technology startup that has developed an AI-powered diagnostic platform for early disease detection. Our system analyzes medical imaging data (X-rays, MRIs, CT scans) using advanced deep learning algorithms to detect potential health issues before they become severe.
+## Troubleshooting
 
-Founded by Dr. Sarah Chen (former Head of AI at Stanford Medical Center) and Tom Rodriguez (ex-Google AI engineer), our team combines deep healthcare expertise with cutting-edge AI capabilities. We've already partnered with 5 major hospitals for pilot programs and have processed over 50,000 scans with a 94% accuracy rate.
+### API Key Issues
+If you see an error about the OpenAI API key:
+1. Make sure you've created a `.env` file in the project root
+2. Verify your API key is correct and has sufficient credits
+3. Restart the Streamlit app after adding/changing the API key
 
-The global medical imaging market is projected to reach $45B by 2025. Our initial focus is on lung cancer detection, where early diagnosis can improve survival rates by up to 70%. We've secured $2M in seed funding from leading healthcare VCs and have filed 3 patents for our core technology.
+### Python Cache Issues
+If you encounter import errors, run:
+```bash
+python clear_cache.py
+```
 
-Current traction:
-- 5 hospital partnerships
-- 50,000+ scans processed
-- $500K in pilot contracts
-- 94% accuracy rate (validated by independent studies)
-- FDA approval process initiated
+## Contact
 
-We're raising a Series A round of $10M to expand our hospital network, obtain FDA approval, and develop detection capabilities for additional diseases. 
+- Built by @Wali-Hasan. Open to feedback, contributions, and collabs.
